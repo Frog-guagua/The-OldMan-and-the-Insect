@@ -4,7 +4,7 @@ using UnityEngine;
 
 // 定义一个 ScriptableObject 类
 [CreateAssetMenu(fileName = "InsectData", menuName = "ScriptableObjects/InsectData", order = 1)]
-public class InsectData : ScriptableObject
+public class InsectDataSO : ScriptableObject
 {
     // 在这里声明你的公共变量
     public int insectId;

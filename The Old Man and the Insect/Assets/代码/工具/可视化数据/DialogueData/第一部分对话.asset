@@ -10,9 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0c83d79d798568942a08f4d3426d13ae, type: 3}
-  m_Name: "\u6765\u4E86"
+  m_Name: "\u7B2C\u4E00\u90E8\u5206\u5BF9\u8BDD"
   m_EditorClassIdentifier: 
   dialogueList:
   - speakerName: 1
     speakerSprite: {fileID: 0}
     content: 1
+  - speakerName: 2
+    speakerSprite: {fileID: 0}
+    content: 2

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,19 +10,61 @@ public enum LevelState
 {
    OnEnterGame,
    KnockingDoor,
+   dialogue
 }
+
 public class LevelStateManager : MonoBehaviour
-{   
+{
+    #region 单例
+
     
+
+   
+    private LevelStateManager() {}
+
+   
+    private static LevelStateManager _instance;
+
+    
+    public static LevelStateManager Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                _instance = FindObjectOfType<LevelStateManager>();
+                if (_instance == null)
+                {
+                  
+                    var singletonObject = new GameObject("LevelStateManagerSingleton");
+                    _instance = singletonObject.AddComponent<LevelStateManager>();
+                }
+            }
+            return _instance;
+        }
+    }
+    #endregion
     public float Delay_Before_Knocking = 2f;
     private LevelState currentState;
     private LevelState lastState;
 
-
+   
     public DialogueData dia1;
+    public DialogueData dia2;
     // Start is called before the first frame update
     void Start()
-    {
+    {   
+        if (_instance != this && _instance != null)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            _instance = this;
+         
+        }
+
+      
         currentState = LevelState.OnEnterGame;
         lastState = LevelState.OnEnterGame;
        //待实现：播放音效，等写了音效管理系统
@@ -39,7 +82,9 @@ public class LevelStateManager : MonoBehaviour
                case LevelState.KnockingDoor:
                    StartCoroutine(KnockingDoorState());
                    break;
-               
+               case LevelState.dialogue:
+                   DialogueManager.Instance.StartDialogue(dia2,diaEnd);
+                   break;
                
             }
             lastState = currentState;
@@ -68,8 +113,14 @@ public class LevelStateManager : MonoBehaviour
 
     IEnumerator KnockingDoorState()
     {   
-        print("咚咚咚");
+        print("咚咚咚");//待实现音效
         yield return new WaitForSeconds(1f);
-        DialogueManager.Instance.StartDialogue(dia1);
+        DialogueManager.Instance.StartDialogue(dia1,diaEnd);
+    }
+
+    void diaEnd()
+    {   
+        print("ding");
+        //获得笼子
     }
 }

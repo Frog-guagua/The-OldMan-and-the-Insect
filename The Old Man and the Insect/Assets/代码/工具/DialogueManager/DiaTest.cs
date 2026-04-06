@@ -18,6 +18,11 @@ public class DiaTest : MonoBehaviour
 
     public void DialogueTest()
     {
-        DialogueManager.Instance.StartDialogue(data);
+        DialogueManager.Instance.StartDialogue(data,a);
+    }
+
+    public void a()
+    {
+        print("y");
     }
 }

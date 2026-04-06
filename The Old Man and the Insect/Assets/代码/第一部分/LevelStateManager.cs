@@ -17,6 +17,8 @@ public class LevelStateManager : MonoBehaviour
     private LevelState currentState;
     private LevelState lastState;
 
+
+    public DialogueData dia1;
     // Start is called before the first frame update
     void Start()
     {
@@ -35,8 +37,10 @@ public class LevelStateManager : MonoBehaviour
             switch (currentState)
             {   
                case LevelState.KnockingDoor:
-                   print("咚咚咚");
+                   StartCoroutine(KnockingDoorState());
                    break;
+               
+               
             }
             lastState = currentState;
         }
@@ -51,7 +55,7 @@ public class LevelStateManager : MonoBehaviour
     // 每个状态的具体逻辑处理
    
     // 切换状态
-    private void SwitchState(LevelState newState)
+    public void SwitchState(LevelState newState)
     {
         currentState = newState;
     }
@@ -60,5 +64,12 @@ public class LevelStateManager : MonoBehaviour
     {
         yield return new WaitForSeconds(delayTime);
         SwitchState(newState);
+    }
+
+    IEnumerator KnockingDoorState()
+    {   
+        print("咚咚咚");
+        yield return new WaitForSeconds(1f);
+        DialogueManager.Instance.StartDialogue(dia1);
     }
 }

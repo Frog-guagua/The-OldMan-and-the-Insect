@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
@@ -24,7 +26,7 @@ public class DialogueManager : MonoBehaviour
     private bool isSentenceFinish;
     private bool isDialoguePlaying;
     private int currentSentenceIndex;//这个变量记录当前说到第几句话了
-
+    private Action currentact;
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -44,9 +46,10 @@ public class DialogueManager : MonoBehaviour
         currentSentenceIndex = 0;
     }
 
-    public void StartDialogue(DialogueData targetDialogueData)
+    public void StartDialogue(DialogueData targetDialogueData,Action endact=null)
         //可以在任何地方启动对话
         //传入目的对话的SO文件即可
+    //endact是结束对话时触发的方法，没有就传个空的
     {
         if (isDialoguePlaying) return;//确保只有一段对话在执行
         currentDialogueData = targetDialogueData;
@@ -54,7 +57,7 @@ public class DialogueManager : MonoBehaviour
         currentSentenceIndex = 0;
 
         dialogueUI.SetActive(true);
-
+        currentact = endact;
         PlayCurrentSentence();
     }
 
@@ -62,7 +65,7 @@ public class DialogueManager : MonoBehaviour
     {
         if (currentSentenceIndex >= currentDialogueData.dialogueList.Count)
         {
-            EndDialogue();
+            EndDialogue(currentact);
             return;//避免超出范围，及时结束对话
         }
 
@@ -106,7 +109,7 @@ public class DialogueManager : MonoBehaviour
         PlayCurrentSentence();
     }
 
-    private void EndDialogue()//关闭面板
+    private void EndDialogue(Action endAct)//关闭面板,执行结束对话操作
     {
         isDialoguePlaying = false;
         isSentenceFinish = false;
@@ -116,5 +119,8 @@ public class DialogueManager : MonoBehaviour
 
         if (typeWriterCoroutine != null) StopCoroutine(typeWriterCoroutine);
         typeWriterCoroutine = null;
+        endAct?.Invoke();
+        currentact = null;
     }
+    
 }

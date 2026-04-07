@@ -1,103 +1,127 @@
 using System.Collections;
 using UnityEngine;
 
-//呱：写在最前面 ——> 这个脚本挂载在MainCamara上面！
-public class CamaraDelayFollow : MonoBehaviour
+public class CameraDelayFollow : MonoBehaviour
 {
-    #region 玩家相关
+    public Transform playerTransform;      // 玩家位置
 
-    //[玩家位置]
-    [Header("Player")]
-    [SerializeField]Transform PlayerPos;
+    public GameObject map;                 // 地图物体（用于自动获取边界）
 
-    #endregion
+    private float startX;
+    private float startY;
+    private float startZ;
 
-    #region 相机相关
+    public float delayTime = 1f;
+    public float smoothTime;               // 未使用，保留
+    private bool startFollow;
 
-    //[相机初始位置]
-    private float OriginalX;
-    private float OriginalY;
-    private float OrigionalZ;
+    // X轴边界
+    private float cameraLeftBound = -28.84f;
+    private float cameraRightBound = 39.31f;
+    // Y轴边界
+    private float cameraBottomBound = -10f;
+    private float cameraTopBound = 10f;
 
-    //[相机手感参数]
-    [SerializeField] float DelayTime=1f;
-    [SerializeField] float CamaraMoveSpeed= 0.1f;
-    
-    #endregion
-
-    #region 地图相关
-
-    //[地图]：获取所在地图的边界 坐标 从而限制相机边界
-    [SerializeField]  GameObject Map;
-    [SerializeField] float MapLeftBoundX;
-    [SerializeField]  float MapRightBoundX;
-    
-    #endregion
-
-    #region bool开关
-
-    //[bool开关] 当前状态更新
-    private bool StartFollow;
-
-    #endregion
-    
-    private float PlayerBeforePosX;
-    private Vector3 CamaraGoalPos;
+    public float cameraMoveSpeed = 0.1f;
 
     void Start()
     {
-        #region 初始化相机的位置
-        
-        //呱： 一开始先把相机放到玩家位置去 其实只要
-        OriginalX = PlayerPos.transform.position.x;
-        OriginalY = PlayerPos.transform.position.y;
-        OrigionalZ = transform.position.z;
-        
-        transform.position = new Vector3(OriginalX , OriginalY, OrigionalZ);
+        // 自动获取地图边界（如果地图物体存在）
+        if (map != null)
+        {
+            SpriteRenderer sr = map.GetComponent<SpriteRenderer>();
+            if (sr != null)
+            {
+                cameraLeftBound = sr.bounds.min.x;
+                cameraRightBound = sr.bounds.max.x;
+                cameraBottomBound = sr.bounds.min.y;
+                cameraTopBound = sr.bounds.max.y;
+            }
+            else
+            {
+                Collider2D col = map.GetComponent<Collider2D>();
+                if (col != null)
+                {
+                    cameraLeftBound = col.bounds.min.x;
+                    cameraRightBound = col.bounds.max.x;
+                    cameraBottomBound = col.bounds.min.y;
+                    cameraTopBound = col.bounds.max.y;
+                }
+            }
+        }
 
-        #endregion
+        startX = playerTransform.position.x;
+        startY = transform.position.y;
+        startZ = transform.position.z;
+        transform.position = new Vector3(startX, startY, startZ);
 
-        #region 记录玩家上一次的位置
+        lastPlayerX = playerTransform.position.x;
+        lastPlayerY = playerTransform.position.y;
 
-        PlayerBeforePosX = PlayerPos.transform.position.x;
-
-        #endregion
-        
-        //呱：初始使用一次延迟 也就是让相机等一会再动
-        StartCoroutine(OriginalDelay());
-
+        StartCoroutine(InitialDelay());
     }
-    
-    
+
+    IEnumerator InitialDelay()
+    {
+        yield return new WaitForSeconds(delayTime);
+        startFollow = true;
+    }
+
+    IEnumerator Delay()
+    {
+        yield return new WaitForSeconds(delayTime);
+        startFollow = true;
+    }
+
+    private float playerMoveDeltaX;
+    private float lastPlayerX;
+    private float lastPlayerY;
+    private Vector3 targetCameraPos;
+
     void Update()
     {
-        // 只有延迟结束后才允许相机移动
-        if (StartFollow)
+        // 计算目标位置（先取玩家位置，后续边界会修正）
+        targetCameraPos = new Vector3(playerTransform.position.x, playerTransform.position.y, startZ);
+
+        // X轴边界处理
+        if (playerTransform.position.x < cameraLeftBound)
         {
-            LetCamaraMove();
+            targetCameraPos.x = cameraLeftBound;
+            transform.position = Vector3.MoveTowards(transform.position, targetCameraPos, cameraMoveSpeed * Time.deltaTime);
         }
+        else if (playerTransform.position.x > cameraRightBound)
+        {
+            targetCameraPos.x = cameraRightBound;
+            transform.position = Vector3.MoveTowards(transform.position, targetCameraPos, cameraMoveSpeed * Time.deltaTime);
+        }
+
+        // Y轴边界处理（仿照X）
+        if (playerTransform.position.y < cameraBottomBound)
+        {
+            targetCameraPos.y = cameraBottomBound;
+            transform.position = Vector3.MoveTowards(transform.position, targetCameraPos, cameraMoveSpeed * Time.deltaTime);
+        }
+        else if (playerTransform.position.y > cameraTopBound)
+        {
+            targetCameraPos.y = cameraTopBound;
+            transform.position = Vector3.MoveTowards(transform.position, targetCameraPos, cameraMoveSpeed * Time.deltaTime);
+        }
+
+        // 记录玩家上一帧位置（用于判断移动，原脚本中虽然定义但未使用，保留）
+        playerMoveDeltaX = Mathf.Abs(playerTransform.position.x) - Mathf.Abs(lastPlayerX);
     }
-    
-    //呱：这是设置相机目标位置 和 相机移动的函数
-    void LetCamaraMove()
-    {
-        float targetX = PlayerPos.transform.position.x;
-        targetX = Mathf.Clamp(targetX, MapLeftBoundX, MapRightBoundX);
-        
-        CamaraGoalPos = new Vector3(targetX, OriginalY, OrigionalZ);
-        transform.position = Vector3.MoveTowards(transform.position, CamaraGoalPos, CamaraMoveSpeed * Time.deltaTime);
-    }
-    
-    //呱：获取上一帧玩家的x坐标
+
     void LateUpdate()
     {
-        PlayerBeforePosX = PlayerPos.transform.position.x;
+        lastPlayerX = playerTransform.position.x;
+        lastPlayerY = playerTransform.position.y;
     }
-    
-    //呱：这是初始延迟的协程
-    IEnumerator OriginalDelay()
+
+    private void FixedUpdate()
     {
-        yield return new WaitForSeconds(DelayTime);
-        StartFollow = true;
+        if (startFollow)
+        {
+            transform.position = Vector3.Lerp(transform.position, targetCameraPos, cameraMoveSpeed);
+        }
     }
 }

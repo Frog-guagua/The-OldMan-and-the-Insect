@@ -10,7 +10,8 @@ public enum LevelState
 {
    OnEnterGame,
    KnockingDoor,
-   dialogue
+   dialogue,
+   havingCage
 }
 
 public class LevelStateManager : MonoBehaviour
@@ -48,7 +49,8 @@ public class LevelStateManager : MonoBehaviour
     private LevelState currentState;
     private LevelState lastState;
 
-   
+   public AudioClip KnockingSound;
+   public AudioClip birdsound;
     public DialogueData dia1;
     public DialogueData dia2;
     // Start is called before the first frame update
@@ -68,6 +70,7 @@ public class LevelStateManager : MonoBehaviour
         currentState = LevelState.OnEnterGame;
         lastState = LevelState.OnEnterGame;
        //待实现：播放音效，等写了音效管理系统
+       AudioMgr.Instance.PlaySFX(birdsound);
        print("吱吱吱");
        StartCoroutine(DelayToSwitchState(LevelState.KnockingDoor, Delay_Before_Knocking));
     }
@@ -84,6 +87,9 @@ public class LevelStateManager : MonoBehaviour
                    break;
                case LevelState.dialogue:
                    DialogueManager.Instance.StartDialogue(dia2,diaEnd);
+                   break;
+               case LevelState.havingCage:
+                   //桌子逻辑，点击桌子放笼子
                    break;
                
             }
@@ -114,13 +120,15 @@ public class LevelStateManager : MonoBehaviour
     IEnumerator KnockingDoorState()
     {   
         print("咚咚咚");//待实现音效
+        AudioMgr.Instance.PlaySFX(KnockingSound);
         yield return new WaitForSeconds(1f);
-        DialogueManager.Instance.StartDialogue(dia1,diaEnd);
+        DialogueManager.Instance.StartDialogue(dia1);
     }
 
     void diaEnd()
     {   
         print("ding");
         //获得笼子
+        SwitchState(LevelState.havingCage);
     }
 }

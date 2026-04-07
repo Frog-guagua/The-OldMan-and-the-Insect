@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f62303938f5f0b043b0b51c5d121802b, type: 3}
   m_Name: E
   m_EditorClassIdentifier: 
-  insectId: 0
+  insectId: 5
   insectName: 
   insectHP: 2
   insectAtk: 3
   pointsComsumption: 1
+  description: 

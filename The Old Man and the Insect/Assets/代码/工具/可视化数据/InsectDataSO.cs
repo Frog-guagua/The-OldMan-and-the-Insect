@@ -12,4 +12,5 @@ public class InsectDataSO : ScriptableObject
     public float insectHP;
     public float insectAtk;
     public float pointsComsumption=1;
+    public string description;
 }

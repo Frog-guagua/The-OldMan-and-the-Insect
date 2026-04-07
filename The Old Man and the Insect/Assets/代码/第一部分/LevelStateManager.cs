@@ -48,7 +48,7 @@ public class LevelStateManager : MonoBehaviour
     public float Delay_Before_Knocking = 2f;
     private LevelState currentState;
     private LevelState lastState;
-
+    public AudioClip bgm;
    public AudioClip KnockingSound;
    public AudioClip birdsound;
     public DialogueData dia1;
@@ -57,7 +57,8 @@ public class LevelStateManager : MonoBehaviour
     void Start()
     {   
         if (_instance != this && _instance != null)
-        {
+        {   
+            
             Destroy(gameObject);
         }
         else
@@ -65,7 +66,7 @@ public class LevelStateManager : MonoBehaviour
             _instance = this;
          
         }
-
+        AudioMgr.Instance.PlayBGM(bgm);
       
         currentState = LevelState.OnEnterGame;
         lastState = LevelState.OnEnterGame;

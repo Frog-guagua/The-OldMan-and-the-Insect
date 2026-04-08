@@ -12,7 +12,8 @@ public enum LevelState
     KnockingDoor,
     openDoorAnm,
     dialogue,
-    havingCage
+    havingCage,
+    leavinghouse
 }
 
 public class LevelStateManager : MonoBehaviour
@@ -61,7 +62,8 @@ public class LevelStateManager : MonoBehaviour
    
     public AudioClip KnockingSound;
     public AudioClip birdsound;
-    
+    [Header("敲门震动间隔")]
+    public float shakeDelay=1f;
     [Header("对话")]
     public DialogueData dia1;
     public DialogueData dia2;
@@ -69,8 +71,10 @@ public class LevelStateManager : MonoBehaviour
     [Header("门检测区域范围")]
     public Vector2 leftAndDown_DoorRange;
     public Vector2 rightAndUp_DoorRange;
-    
- 
+
+
+    private bool doorCanOpen=false;
+    private bool afterKnock = false;
     
     void Start()
     {   
@@ -93,7 +97,7 @@ public class LevelStateManager : MonoBehaviour
        //待实现：播放音效，等写了音效管理系统
        AudioMgr.Instance.PlaySFX(birdsound);
        
-       StartCoroutine(DelayToSwitchState(LevelState.KnockingDoor, Delay_Before_Knocking));
+       StartCoroutine(DelayToSwitchState(LevelState.KnockingDoor, 4f));
     }
 
     // Update is called once per frame
@@ -105,6 +109,7 @@ public class LevelStateManager : MonoBehaviour
             {   
                case LevelState.KnockingDoor:
                    StartCoroutine(KnockingDoorState());
+                   StartCoroutine(KnockingShake());
                    break;
                case LevelState.dialogue:
                    DialogueManager.Instance.StartDialogue(dia2,diaEnd);
@@ -112,8 +117,13 @@ public class LevelStateManager : MonoBehaviour
                case LevelState.openDoorAnm:
                    StartCoroutine(openAnim());
                    break;
-               case LevelState.havingCage:
+               case LevelState.havingCage://此处逻辑待定，不知道美术资源是直接给个提笼子的老爷爷还是说给个笼子
+
+                   table.tableCanInteract = true;
                    //桌子逻辑，点击桌子放笼子
+                   break;
+               case LevelState.leavinghouse:
+                   //离开房子
                    break;
                
             }
@@ -124,11 +134,22 @@ public class LevelStateManager : MonoBehaviour
         switch (currentState)
         {
             case LevelState.KnockingDoor://目前设定为玩家移动到门区域然后就开门,使用一个最愚蠢的坐标判定
-                if (player.transform.position.x > leftAndDown_DoorRange.x 
+                if (player.transform.position.x > leftAndDown_DoorRange.x
                     && player.transform.position.x < rightAndUp_DoorRange.x
                     && player.transform.position.y > leftAndDown_DoorRange.y &&
-                    player.transform.position.y < rightAndUp_DoorRange.y)
+                    player.transform.position.y < rightAndUp_DoorRange.y
+                    &&afterKnock)
 
+                {
+                    doorCanOpen = true;
+                }
+                else
+                {
+                    doorCanOpen = false;
+                    
+                }
+
+                if (doorCanOpen && Input.GetKey(KeyCode.E))
                 {
                     PlayerMove.canMove = false;
                     SwitchState(LevelState.openDoorAnm);
@@ -153,11 +174,24 @@ public class LevelStateManager : MonoBehaviour
 
     IEnumerator KnockingDoorState()
     {   
-        print("咚咚咚");//待实现音效
+       
         AudioMgr.Instance.PlaySFX(KnockingSound);
-        yield return new WaitForSeconds(1f);
+       
+        yield return new WaitForSeconds(Delay_Before_Knocking);
         
         DialogueManager.Instance.StartDialogue(dia1);
+        yield return new WaitForSeconds(1f);
+        afterKnock = true;
+    }
+
+    IEnumerator KnockingShake()
+    { CamaraShake.ShakeCameraInDialogue(0.5f,0.5f);
+        yield return new WaitForSeconds(shakeDelay);
+        CamaraShake.ShakeCameraInDialogue(0.5f,0.5f);
+        yield return new WaitForSeconds(shakeDelay);
+        CamaraShake.ShakeCameraInDialogue(0.5f,0.5f);
+        
+        
     }
     IEnumerator openAnim()
     {

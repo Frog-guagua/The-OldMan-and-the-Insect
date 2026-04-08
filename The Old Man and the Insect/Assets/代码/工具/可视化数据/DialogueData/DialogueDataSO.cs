@@ -11,7 +11,7 @@ public class DialogueData : ScriptableObject
         public string speakerName;
         public Sprite speakerSprite;
         public string content;
-        public UnityEvent dialogueEvent;
+        public bool Shake;
     }
 
     public List<DialogueSentence> dialogueList = new List<DialogueSentence>();

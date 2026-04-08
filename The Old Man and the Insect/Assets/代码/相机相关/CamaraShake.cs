@@ -6,7 +6,7 @@ using UnityEngine;
 //呱：写在最前面 ——> 挂载在 Main Camara上 
 public class CamaraShake : MonoBehaviour
 {
-    
+   
     //呱：记住这个美味函数的名字吧！
     //呱：妙妙工具嗷嗷嗷啊啊啊啊
     public void ShakeStart(float duration, float strength)
@@ -17,6 +17,20 @@ public class CamaraShake : MonoBehaviour
         {
             StopAllCoroutines();
             StartCoroutine(Shake(duration, strength));
+        }
+    }
+    public static void ShakeCameraInDialogue(float duration,float strength)
+    {
+        //我默认将这个代码挂在主相机上
+        //这是失败产出的rubbish
+        //但好像也能用。
+        Camera mainCam = Camera.main;
+        if (mainCam == null) return;
+
+        CamaraShake shake = mainCam.GetComponent<CamaraShake>();
+        if (shake != null)
+        {
+            shake.ShakeStart(duration, strength);
         }
     }
 

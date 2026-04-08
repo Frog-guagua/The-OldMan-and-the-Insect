@@ -13,15 +13,9 @@ MonoBehaviour:
   m_Name: Example
   m_EditorClassIdentifier: 
   dialogueList:
-  - speakerName: "\u97E9\u7EA2\u96F7"
+  - speakerName: 
     speakerSprite: {fileID: 0}
-    content: aaaaa
-  - speakerName: "\u7269\u7406\u4E91"
-    speakerSprite: {fileID: 0}
-    content: bbbbb
-  - speakerName: "\u97E9\u7EA2\u96F7"
-    speakerSprite: {fileID: 0}
-    content: ccccc
-  - speakerName: "\u7269\u7406\u4E91"
-    speakerSprite: {fileID: 0}
-    content: ddddd
+    content: 
+    dialogueEvent:
+      m_PersistentCalls:
+        m_Calls: []

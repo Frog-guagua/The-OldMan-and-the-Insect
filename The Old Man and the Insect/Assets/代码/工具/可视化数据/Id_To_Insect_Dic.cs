@@ -18,4 +18,5 @@ public class Id_To_Insect_Dic:MonoBehaviour
             IdToInsectDic.Add(i, InsectDataList[i-1]);
         }
     }
+    
 }

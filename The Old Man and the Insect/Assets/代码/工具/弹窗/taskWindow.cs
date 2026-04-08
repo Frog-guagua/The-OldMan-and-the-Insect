@@ -9,7 +9,7 @@ public class TaskWindow : MonoBehaviour
     public Text contentText;
     public Button closeButton;
 
-    private TaskData currentTask;
+    private TaskDataSO currentTask;
 
    
     private TaskWindow() { }
@@ -48,7 +48,7 @@ public class TaskWindow : MonoBehaviour
         }
     }
 
-    public void Show(TaskData task)
+    public void Show(TaskDataSO task)
     {
         if (task == null ) return; // 如果任务已完成或为空，则不显示
 

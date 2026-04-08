@@ -12,6 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a118e75f2730c014b862903fe186a8eb, type: 3}
   m_Name: New Task
   m_EditorClassIdentifier: 
-  Title: 
-  Content: 
-  IsCompleted: 0
+  Title: 1
+  Content: 111111

@@ -67,7 +67,12 @@ public class CageUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (Input.GetKey(KeyCode.E))
+        {
+            setInactive();//非常神秘，我用escape推出不了，其他键就可以，先放着
+            Debug.Log("esc");
+        }
+        
     }
 
     public void slotOnClick() // 处理点击逻辑
@@ -75,6 +80,10 @@ public class CageUI : MonoBehaviour
 
     }
 
-    public void setAct() { this.gameObject.SetActive(true); }
-    public void setInactive() { this.gameObject.SetActive(false); }
+    public void setAct() { this.gameObject.SetActive(true);
+        PlayerMove.canMove = false;
+    }
+    public void setInactive() { this.gameObject.SetActive(false);
+        PlayerMove.canMove = true;
+    }
 }

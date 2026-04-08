@@ -71,14 +71,14 @@ public class LevelStateManager : MonoBehaviour
     [Header("门检测区域范围")]
     public Vector2 leftAndDown_DoorRange;
     public Vector2 rightAndUp_DoorRange;
-
-
-    
+    [Header("任务提示")] public TaskDataSO task1;
+    public GameObject door;
+    private ObjectShake doorshake;
     private bool afterKnock = false;
     
     void Start()
-    {   
-
+    {
+        doorshake = door.GetComponent<ObjectShake>();
         
         if (_instance != this && _instance != null)
         {   
@@ -118,11 +118,12 @@ public class LevelStateManager : MonoBehaviour
                    StartCoroutine(openAnim());
                    break;
                case LevelState.havingCage://此处逻辑待定，不知道美术资源是直接给个提笼子的老爷爷还是说给个笼子
-
+                   TaskWindow.Instance.Show(task1);
                    table.tableCanInteract = true;
                    //桌子逻辑，点击桌子放笼子
                    break;
                case LevelState.leavinghouse:
+                   TaskWindow.Instance.CompleteTask();
                    //离开房子
                    break;
                
@@ -179,11 +180,11 @@ public class LevelStateManager : MonoBehaviour
     }
 
     IEnumerator KnockingShake()
-    { CamaraShake.ShakeCameraInDialogue(0.5f,0.5f);
+    { doorshake.DoorShake();
+        Debug.Log("调用shake");
         yield return new WaitForSeconds(shakeDelay);
-        CamaraShake.ShakeCameraInDialogue(0.5f,0.5f);
-        yield return new WaitForSeconds(shakeDelay);
-        CamaraShake.ShakeCameraInDialogue(0.5f,0.5f);
+        doorshake.DoorShake();
+        
         
         
     }

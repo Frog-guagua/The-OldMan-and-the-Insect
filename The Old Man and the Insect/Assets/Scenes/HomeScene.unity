@@ -278,6 +278,7 @@ GameObject:
   - component: {fileID: 78415051}
   - component: {fileID: 78415050}
   - component: {fileID: 78415052}
+  - component: {fileID: 78415053}
   m_Layer: 0
   m_Name: door
   m_TagString: Untagged
@@ -397,6 +398,21 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &78415053
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 78415049}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7fc37de6db4e93438af5270764c5fa7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  duration: 0.5
+  strength: 0.05
+  shakeObject: {fileID: 78415049}
 --- !u!1 &399648778
 GameObject:
   m_ObjectHideFlags: 0
@@ -516,6 +532,8 @@ MonoBehaviour:
   dia2: {fileID: 11400000, guid: d5f1d5f313a956e409449c114f36df57, type: 2}
   leftAndDown_DoorRange: {x: -13, y: -2}
   rightAndUp_DoorRange: {x: -10, y: 1}
+  task1: {fileID: 11400000, guid: 32d123601f2768d4b94a7ab78575ba3f, type: 2}
+  door: {fileID: 78415049}
 --- !u!4 &423214230
 Transform:
   m_ObjectHideFlags: 0

@@ -73,7 +73,7 @@ public class LevelStateManager : MonoBehaviour
     public Vector2 rightAndUp_DoorRange;
 
 
-    private bool doorCanOpen=false;
+    
     private bool afterKnock = false;
     
     void Start()
@@ -141,19 +141,13 @@ public class LevelStateManager : MonoBehaviour
                     &&afterKnock)
 
                 {
-                    doorCanOpen = true;
-                }
-                else
-                {
-                    doorCanOpen = false;
-                    
-                }
-
-                if (doorCanOpen && Input.GetKey(KeyCode.E))
-                {
+                  
                     PlayerMove.canMove = false;
                     SwitchState(LevelState.openDoorAnm);
                 }
+               
+
+             
                 break;
         }
     }

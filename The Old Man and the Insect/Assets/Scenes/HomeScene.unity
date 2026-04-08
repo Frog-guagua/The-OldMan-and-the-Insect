@@ -234,8 +234,8 @@ MonoBehaviour:
   Delay_Before_dia: 2
   bgm: {fileID: 0}
   player: {fileID: 1049168726}
-  KnockingSound: {fileID: 0}
-  birdsound: {fileID: 0}
+  KnockingSound: {fileID: 8300000, guid: df2ee7efedb01164cb3574792738e84f, type: 3}
+  birdsound: {fileID: 8300000, guid: 03027b45c346dba418ae3b8fc3e4237a, type: 3}
   dia1: {fileID: 11400000, guid: ad5625b24a9f68f4393f4b3d700554ab, type: 2}
   dia2: {fileID: 11400000, guid: d5f1d5f313a956e409449c114f36df57, type: 2}
   leftAndDown_DoorRange: {x: -13, y: 0}
@@ -415,7 +415,7 @@ GameObject:
   - component: {fileID: 1049168728}
   - component: {fileID: 1049168727}
   m_Layer: 0
-  m_Name: "\u6B63\u5F851"
+  m_Name: "\u73A9\u5BB6"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -517,8 +517,8 @@ Transform:
   m_GameObject: {fileID: 1049168726}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -12.92, y: 0.98, z: 0}
-  m_LocalScale: {x: 0.575, y: 0.7651, z: 1}
+  m_LocalPosition: {x: -5.92, y: 0.76, z: 0}
+  m_LocalScale: {x: 0.570515, y: 0.6550021, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}

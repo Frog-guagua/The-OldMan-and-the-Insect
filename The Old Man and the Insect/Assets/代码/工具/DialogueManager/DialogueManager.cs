@@ -82,7 +82,7 @@ public class DialogueManager : MonoBehaviour
 
         speakerNameText.text = sentence.speakerName;
         speakerSpriteImg.sprite = sentence.speakerSprite;
-
+        sentence.dialogueEvent?.Invoke();
         typeWriterCoroutine = StartCoroutine(TypeWriterCoroutine(sentence.content));
     }
 

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 [CreateAssetMenu(menuName = "ScriptableObjects/新建对话数据", fileName = "NewDialogueData")]
 public class DialogueData : ScriptableObject
@@ -10,6 +11,7 @@ public class DialogueData : ScriptableObject
         public string speakerName;
         public Sprite speakerSprite;
         public string content;
+        public UnityEvent dialogueEvent;
     }
 
     public List<DialogueSentence> dialogueList = new List<DialogueSentence>();

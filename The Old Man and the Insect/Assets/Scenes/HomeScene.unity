@@ -231,9 +231,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Delay_Before_Knocking: 2
+
   Delay_Before_dia: 2
   bgm: {fileID: 0}
   player: {fileID: 1049168726}
+
+  bgm: {fileID: 8300000, guid: acf1adf417383b843bdfbe29e595f510, type: 3}
+
   KnockingSound: {fileID: 0}
   birdsound: {fileID: 0}
   dia1: {fileID: 11400000, guid: ad5625b24a9f68f4393f4b3d700554ab, type: 2}
@@ -402,6 +406,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 761027304}
   m_CullTransparentMesh: 1
+
 --- !u!1 &1049168726
 GameObject:
   m_ObjectHideFlags: 0
@@ -523,6 +528,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+
 --- !u!1 &1468344215
 GameObject:
   m_ObjectHideFlags: 0

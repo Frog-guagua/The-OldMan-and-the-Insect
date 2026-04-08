@@ -52,6 +52,7 @@ public class LevelStateManager : MonoBehaviour
     public float Delay_Before_dia = 2f;
     private LevelState currentState;
     private LevelState lastState;
+
         
     public AudioClip bgm;
        
@@ -63,6 +64,11 @@ public class LevelStateManager : MonoBehaviour
     [Header("对话")]
 
   
+
+    public AudioClip bgm;
+   public AudioClip KnockingSound;
+   public AudioClip birdsound;
+
     public DialogueData dia1;
     public DialogueData dia2;
     [Header("门检测区域范围")]
@@ -72,7 +78,8 @@ public class LevelStateManager : MonoBehaviour
     void Start()
     {   
         if (_instance != this && _instance != null)
-        {
+        {   
+            
             Destroy(gameObject);
         }
         else

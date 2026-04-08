@@ -13,9 +13,11 @@ MonoBehaviour:
   m_Name: "\u7B2C\u4E00\u90E8\u5206\u5BF9\u8BDD"
   m_EditorClassIdentifier: 
   dialogueList:
-  - speakerName: 1
+  - speakerName: guagua
     speakerSprite: {fileID: 0}
-    content: 1
-  - speakerName: 2
+    content: guagua
+    Shake: 1
+  - speakerName: guagua
     speakerSprite: {fileID: 0}
-    content: 2
+    content: give you a cage
+    Shake: 0

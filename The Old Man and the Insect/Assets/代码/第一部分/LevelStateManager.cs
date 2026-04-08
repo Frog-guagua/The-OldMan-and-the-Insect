@@ -93,7 +93,7 @@ public class LevelStateManager : MonoBehaviour
        //待实现：播放音效，等写了音效管理系统
        AudioMgr.Instance.PlaySFX(birdsound);
        
-       StartCoroutine(DelayToSwitchState(LevelState.KnockingDoor, Delay_Before_Knocking));
+       StartCoroutine(DelayToSwitchState(LevelState.KnockingDoor, 4f));
     }
 
     // Update is called once per frame
@@ -155,7 +155,7 @@ public class LevelStateManager : MonoBehaviour
     {   
         print("咚咚咚");//待实现音效
         AudioMgr.Instance.PlaySFX(KnockingSound);
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(Delay_Before_Knocking);
         
         DialogueManager.Instance.StartDialogue(dia1);
     }

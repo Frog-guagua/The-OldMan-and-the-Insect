@@ -2,16 +2,17 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using System.Linq.Expressions;
 
 
 //ok啊也是偷懒直接写一个伪状态机
 public enum LevelState
 {
-   OnEnterGame,
-   KnockingDoor,
-   dialogue,
-   havingCage
+    OnEnterGame,
+    KnockingDoor,
+    openDoorAnm,
+    dialogue,
+    havingCage
 }
 
 public class LevelStateManager : MonoBehaviour
@@ -45,14 +46,28 @@ public class LevelStateManager : MonoBehaviour
         }
     }
     #endregion
+    [Header("敲门后延迟播放对话时间")]
     public float Delay_Before_Knocking = 2f;
+    [Header("开始播放开门动画到开启对话的延迟时间")]
+    public float Delay_Before_dia = 2f;
     private LevelState currentState;
     private LevelState lastState;
+        
+    public AudioClip bgm;
+       
+    public GameObject player;
+    [Header("音效")]
+   
+    public AudioClip KnockingSound;
+    public AudioClip birdsound;
+    [Header("对话")]
 
-   public AudioClip KnockingSound;
-   public AudioClip birdsound;
+  
     public DialogueData dia1;
     public DialogueData dia2;
+    [Header("门检测区域范围")]
+    public Vector2 leftAndDown_DoorRange;
+    public Vector2 rightAndUp_DoorRange;
     // Start is called before the first frame update
     void Start()
     {   
@@ -65,13 +80,13 @@ public class LevelStateManager : MonoBehaviour
             _instance = this;
          
         }
-
+        AudioMgr.Instance.PlayBGM(bgm);
       
         currentState = LevelState.OnEnterGame;
         lastState = LevelState.OnEnterGame;
        //待实现：播放音效，等写了音效管理系统
        AudioMgr.Instance.PlaySFX(birdsound);
-       print("吱吱吱");
+       
        StartCoroutine(DelayToSwitchState(LevelState.KnockingDoor, Delay_Before_Knocking));
     }
 
@@ -88,6 +103,9 @@ public class LevelStateManager : MonoBehaviour
                case LevelState.dialogue:
                    DialogueManager.Instance.StartDialogue(dia2,diaEnd);
                    break;
+               case LevelState.openDoorAnm:
+                   StartCoroutine(openAnim());
+                   break;
                case LevelState.havingCage:
                    //桌子逻辑，点击桌子放笼子
                    break;
@@ -99,7 +117,17 @@ public class LevelStateManager : MonoBehaviour
         
         switch (currentState)
         {
-            
+            case LevelState.KnockingDoor://目前设定为玩家移动到门区域然后就开门,使用一个最愚蠢的坐标判定
+                if (player.transform.position.x > leftAndDown_DoorRange.x 
+                    && player.transform.position.x < rightAndUp_DoorRange.x
+                    && player.transform.position.y > leftAndDown_DoorRange.y &&
+                    player.transform.position.y < rightAndUp_DoorRange.y)
+
+                {
+                    PlayerMove.canMove = false;
+                    SwitchState(LevelState.openDoorAnm);
+                }
+                break;
         }
     }
 
@@ -124,10 +152,15 @@ public class LevelStateManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
         DialogueManager.Instance.StartDialogue(dia1);
     }
-
+    IEnumerator openAnim()
+    {
+        print("放开门动画");
+        yield return new WaitForSeconds(Delay_Before_dia);
+        SwitchState(LevelState.dialogue);
+    }
     void diaEnd()
     {   
-        print("ding");
+        print("获得笼子");
         //获得笼子
         SwitchState(LevelState.havingCage);
     }

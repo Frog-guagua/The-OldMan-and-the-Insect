@@ -65,9 +65,7 @@ public class LevelStateManager : MonoBehaviour
 
   
 
-    public AudioClip bgm;
-   public AudioClip KnockingSound;
-   public AudioClip birdsound;
+   
 
     public DialogueData dia1;
     public DialogueData dia2;

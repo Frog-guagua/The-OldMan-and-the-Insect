@@ -61,20 +61,21 @@ public class LevelStateManager : MonoBehaviour
    
     public AudioClip KnockingSound;
     public AudioClip birdsound;
+    
     [Header("对话")]
-
-  
-
-   
-
     public DialogueData dia1;
     public DialogueData dia2;
+    
     [Header("门检测区域范围")]
     public Vector2 leftAndDown_DoorRange;
     public Vector2 rightAndUp_DoorRange;
-    // Start is called before the first frame update
+    
+ 
+    
     void Start()
     {   
+
+        
         if (_instance != this && _instance != null)
         {   
             
@@ -155,6 +156,7 @@ public class LevelStateManager : MonoBehaviour
         print("咚咚咚");//待实现音效
         AudioMgr.Instance.PlaySFX(KnockingSound);
         yield return new WaitForSeconds(1f);
+        
         DialogueManager.Instance.StartDialogue(dia1);
     }
     IEnumerator openAnim()

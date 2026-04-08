@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class CameraDelayFollow : MonoBehaviour
+public class CamaraDelayFollow : MonoBehaviour
 {
     public Transform playerTransform;      // 玩家位置
 

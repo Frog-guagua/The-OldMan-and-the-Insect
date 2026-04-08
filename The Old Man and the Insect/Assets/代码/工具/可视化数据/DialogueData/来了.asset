@@ -15,29 +15,5 @@ MonoBehaviour:
   dialogueList:
   - speakerName: guagua
     speakerSprite: {fileID: 21300000, guid: cce03b08336ffc74389c9f8e3a72d7db, type: 3}
-    content: guagua
-    Shake: 1
-  - speakerName: guagua
-    speakerSprite: {fileID: 21300000, guid: cce03b08336ffc74389c9f8e3a72d7db, type: 3}
-    content: guagua
-    Shake: 1
-  - speakerName: guagua
-    speakerSprite: {fileID: 21300000, guid: cce03b08336ffc74389c9f8e3a72d7db, type: 3}
-    content: guagua
-    Shake: 1
-  - speakerName: guagua
-    speakerSprite: {fileID: 21300000, guid: cce03b08336ffc74389c9f8e3a72d7db, type: 3}
-    content: guagua
-    Shake: 1
-  - speakerName: guagua
-    speakerSprite: {fileID: 21300000, guid: cce03b08336ffc74389c9f8e3a72d7db, type: 3}
-    content: guagua
-    Shake: 1
-  - speakerName: guagua
-    speakerSprite: {fileID: 21300000, guid: cce03b08336ffc74389c9f8e3a72d7db, type: 3}
-    content: guagua
-    Shake: 1
-  - speakerName: guagua
-    speakerSprite: {fileID: 21300000, guid: cce03b08336ffc74389c9f8e3a72d7db, type: 3}
-    content: guagua
-    Shake: 1
+    content: i an coming!
+    Shake: 0

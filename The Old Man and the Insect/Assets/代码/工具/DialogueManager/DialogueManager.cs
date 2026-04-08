@@ -56,6 +56,8 @@ public class DialogueManager : MonoBehaviour
         isDialoguePlaying = true;//进入对话状态
         currentSentenceIndex = 0;
 
+        PlayerMove.canMove = false;
+        
         dialogueUI.SetActive(true);
         currentact = endact;
         PlayCurrentSentence();
@@ -116,7 +118,9 @@ public class DialogueManager : MonoBehaviour
         currentSentenceIndex = 0;
 
         dialogueUI.SetActive(false);
-
+        
+        PlayerMove.canMove = true;
+            
         if (typeWriterCoroutine != null) StopCoroutine(typeWriterCoroutine);
         typeWriterCoroutine = null;
         endAct?.Invoke();

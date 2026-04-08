@@ -15,7 +15,9 @@ public class PlayerMove : MonoBehaviour
     private string currentAnimName = "";  
     
     private Animator playerAnimator;
-
+    
+    
+    public static bool canMove = true;//只有在true玩家才能进行移动，避免在对话时玩家还能移动角色
     #endregion
 
     enum E_PlayerState
@@ -53,26 +55,26 @@ public class PlayerMove : MonoBehaviour
         float newX = PlayerTransform.position.x;
         float newY = PlayerTransform.position.y;
     
-        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
+        if ((Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))&&canMove)
         {
             newY = PlayerTransform.position.y + PlayerMoveLength_Y * Time.deltaTime;
             IsMove = true;
             playerState = E_PlayerState.Back;
         }
-        else if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
+        else if ((Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))&&canMove)
         {
             newY = PlayerTransform.position.y - PlayerMoveLength_Y * Time.deltaTime;
             IsMove = true;
             playerState = E_PlayerState.Front;
         }
-        else if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+        else if ((Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))&&canMove)
         {
             newX = PlayerTransform.position.x - PlayerMoveLength_X * Time.deltaTime;
             IsMove = true;
             playerState = E_PlayerState.TowardsLeft;
             SetSideTowards(E_PlayerState.TowardsLeft);
         }
-        else if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
+        else if ((Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))&&canMove)
         {
             newX = PlayerTransform.position.x + PlayerMoveLength_X * Time.deltaTime;
             IsMove = true;

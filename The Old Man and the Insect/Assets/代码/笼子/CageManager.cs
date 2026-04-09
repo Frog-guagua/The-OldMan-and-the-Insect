@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class InsectData//这个玩意作为正式使用的虫虫数据集
 {
-    public int insectId;
+    public int insectId=0;
     public string insectName;
     public float insectHP;
     public float insectAtk;
@@ -31,13 +31,14 @@ public sealed class CageManager : MonoBehaviour
 
     #endregion
 
-    public GameObject canvas;
+   
 
     public Dictionary<int, InsectData> insectInCage = new Dictionary<int, InsectData>();
+    
     private List<InsectData> _insectDataList; // 私有字段用于实际存储insectDataList
 
     // 新增属性，用于当访问insectDataList时动态更新其内容
-    public List<InsectData> insectDataList
+    public List<InsectData> insectDataList//这个列表是insectdata纯享，与dictionary实时同步
     {
         get
         {
@@ -45,6 +46,7 @@ public sealed class CageManager : MonoBehaviour
             _insectDataList = new List<InsectData>(insectInCage.Values);
             return _insectDataList;
         }
+       
     }
 
     // 键和值分别为格子id和该格子内存的数据。
@@ -150,6 +152,16 @@ public sealed class CageManager : MonoBehaviour
         CageSlot cageSlot = slotList[slotid].GetComponent<CageSlot>();
         cageSlot.refreshSlot();
     }
+   
+    public void ReplaceInsects(List<InsectData> newInsects)
+    {
+        // 首先清空现有的昆虫
+        insectInCage.Clear();
 
-    
+        // 重新填充昆虫数据
+        foreach (var insect in newInsects)
+        {
+            AddInsect(insect); // 使用已有的AddInsect方法来添加昆虫
+        }
+    }
 }

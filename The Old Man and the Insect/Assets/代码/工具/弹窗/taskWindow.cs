@@ -46,6 +46,7 @@ public class TaskWindow : MonoBehaviour
         {
             closeButton.onClick.AddListener(CloseWindow);
         }
+        
     }
 
     public void Show(TaskDataSO task)

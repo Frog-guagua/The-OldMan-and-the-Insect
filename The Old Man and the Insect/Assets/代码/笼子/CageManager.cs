@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public struct InsectData//这个玩意作为正式使用的虫虫数据集
+public class InsectData//这个玩意作为正式使用的虫虫数据集
 {
     public int insectId;
     public string insectName;
@@ -12,6 +12,7 @@ public struct InsectData//这个玩意作为正式使用的虫虫数据集
     public float insectAtk;
     public float pointsComsumption;
     public string description;
+    public Image Image;
 }
 
 public sealed class CageManager : MonoBehaviour
@@ -33,6 +34,18 @@ public sealed class CageManager : MonoBehaviour
     public GameObject canvas;
 
     public Dictionary<int, InsectData> insectInCage = new Dictionary<int, InsectData>();
+    private List<InsectData> _insectDataList; // 私有字段用于实际存储insectDataList
+
+    // 新增属性，用于当访问insectDataList时动态更新其内容
+    public List<InsectData> insectDataList
+    {
+        get
+        {
+            // 在这里更新_insectDataList，使其与insectInCage的内容一致
+            _insectDataList = new List<InsectData>(insectInCage.Values);
+            return _insectDataList;
+        }
+    }
 
     // 键和值分别为格子id和该格子内存的数据。
     //格子id为for循环生成每个格子时的那个i，具体见cageui

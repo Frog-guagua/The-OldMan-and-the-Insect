@@ -7,12 +7,18 @@ public class PlayerMove : MonoBehaviour
 {
     #region 玩家
 
+    [Header("音效")]
+    public AudioClip MovingSound;
+    
+    [Header("玩家の步长设置")]
     [SerializeField] float PlayerMoveLength_X = 0;
     [SerializeField] float PlayerMoveLength_Y = 0;
     private Transform PlayerTransform;
     public static bool IsMove = false;
+    private bool lastIsMove = false;
     private Animation PlayerAnimation;
  
+    
     
     private Animator playerAnimator;
     
@@ -48,15 +54,42 @@ public class PlayerMove : MonoBehaviour
     { 
         PosUpdate();
         Move();
+        MovingSfx();
     }
 
+    void MovingSfx()
+    {
+        if (IsMove != lastIsMove)
+        {
+            if (IsMove)
+                MovingSfxStart();
+            else
+                MovingSfxStop();
+            lastIsMove = IsMove;
+        }
+    }
+    
+    void MovingSfxStart()
+    {
+        AudioMgr.Instance.LoopSFX(MovingSound);
+    }
+
+    void MovingSfxStop()
+    {
+        AudioMgr.Instance.StopSFX(MovingSound);
+    }
+    
+    
     bool Move()
     {
         float newX = PlayerTransform.position.x;
         float newY = PlayerTransform.position.y;
-    
+       
+        
+        
         if ((Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))&&canMove)
         {
+            
             newY = PlayerTransform.position.y + PlayerMoveLength_Y * Time.deltaTime;
             IsMove = true;
             playerState = E_PlayerState.Back;

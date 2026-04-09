@@ -67,6 +67,29 @@ public class AudioMgr : MonoBehaviour
             sfxSource.PlayOneShot(clip);
         }
     }
+
+    //呱：加了一个循环音效功能
+    public void LoopSFX(AudioClip clip)
+    {
+        if (sfxSource != null && clip != null)
+        {
+            sfxSource.clip = clip;
+            sfxSource.loop = true;
+            sfxSource.Play();
+        }
+    }
+    
+    //呱：加入了停止音效的功能！
+    public void StopSFX(AudioClip clip)
+    {
+        if (sfxSource != null && clip != null)
+        {
+            sfxSource.Stop();
+            sfxSource.loop = false;
+            sfxSource.clip = null;
+        }
+    }
+    
     
     public void SetBGMVolume(float volume)
     {

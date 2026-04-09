@@ -58,12 +58,14 @@ public class LevelStateManager : MonoBehaviour
     public AudioClip bgm;
        
     public GameObject player;
+    
     [Header("音效")]
-   
     public AudioClip KnockingSound;
     public AudioClip birdsound;
+    
     [Header("敲门震动间隔")]
     public float shakeDelay=1f;
+    
     [Header("对话")]
     public DialogueData dia1;
     public DialogueData dia2;
@@ -71,6 +73,7 @@ public class LevelStateManager : MonoBehaviour
     [Header("门检测区域范围")]
     public Vector2 leftAndDown_DoorRange;
     public Vector2 rightAndUp_DoorRange;
+    
     [Header("任务提示")] public TaskDataSO task1;
     public GameObject door;
     private ObjectShake doorshake;

@@ -12,7 +12,7 @@ public class PlayerMove : MonoBehaviour
     private Transform PlayerTransform;
     public static bool IsMove = false;
     private Animation PlayerAnimation;
-    private string currentAnimName = "";  
+ 
     
     private Animator playerAnimator;
     

@@ -33,7 +33,7 @@ public class ObjectShake : MonoBehaviour
 
     [SerializeField]GameObject shakeObject;
     private Vector3 originalPos;
-    private bool isShaking = true;
+   
     void Start()
     {
         originalPos = shakeObject.transform.localPosition;
@@ -52,7 +52,7 @@ public class ObjectShake : MonoBehaviour
     IEnumerator Shake(float duration, float strength)
     {
         float timeCount = 0.0f;
-        isShaking = true;
+      
         while (timeCount < duration)
         {
 
@@ -65,7 +65,7 @@ public class ObjectShake : MonoBehaviour
         }
   
         shakeObject.transform.localPosition = originalPos;
-        isShaking = false;
+       
        
     }
 

@@ -7,11 +7,19 @@ using UnityEngine.UI;
 public class CageUI : MonoBehaviour
 {
     private static CageUI _instance; // 静态变量，用于保存唯一实例
-
+    
     public Button slot;
 
     public int slotCount = 20;
 
+    public GameObject levelUpUI;
+
+    public Text atk;
+
+    public Text hp;
+
+    public Button hpUpbtn;
+    public Button atkUpbtn;
     // 私有构造函数，防止外部直接调用构造函数
     private CageUI() { }
 
@@ -69,21 +77,59 @@ public class CageUI : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.E))
         {
-            setInactive();//非常神秘，我用escape推出不了，其他键就可以，先放着
+            setInactive();//非常神秘，我用escape退出不了，其他键就可以，先放着
+            //unity你是对我的esc有什么意见吗
             Debug.Log("esc");
+            DataBroker.Instance.datasFromCage = CageManager.Instance.insectDataList;
+            //在关闭培养界面时同步数据给中间商。
         }
         
     }
 
     public void slotOnClick() // 处理点击逻辑
     {
+        levelUpUI.SetActive(true);
+        if (CageManager.Instance.currentChosenData.insectAtklevel > 2)
+        {
+            atkUpbtn.gameObject.SetActive(false);
+        }
+        else
+        {
+            atkUpbtn.gameObject.SetActive(true);
+        }
 
+        if (CageManager.Instance.currentChosenData.insetHplevel > 2)
+        {
+            hpUpbtn.gameObject.SetActive(false);
+        }
+        else
+        {
+            hpUpbtn.gameObject.SetActive(true);
+        }
+        atk.text = CageManager.Instance.currentChosenData.insectAtk.ToString();
+        hp.text = CageManager.Instance.currentChosenData.insectHP.ToString();
+        Debug.Log(CageManager.Instance.currentChosenData.insectAtk.ToString());
     }
 
-    public void setAct() { this.gameObject.SetActive(true);
+    public void setAct() { 
+        this.gameObject.SetActive(true);
         PlayerMove.canMove = false;
     }
-    public void setInactive() { this.gameObject.SetActive(false);
+    public void setInactive() { 
+        this.gameObject.SetActive(false);
         PlayerMove.canMove = true;
+    }
+
+    public void hpLevelUp()//升级点击事件
+    {
+       
+        this.hp.text=CageManager.Instance.currentChosenData.setHpUpData().ToString();
+        Debug.Log( CageManager.Instance.currentChosenData.insetHplevel);
+    }
+    public void atkLevelUp()
+    {
+       
+        this.atk.text=CageManager.Instance.currentChosenData.setAtkUpData().ToString();
+        Debug.Log( CageManager.Instance.currentChosenData.insectAtklevel);
     }
 }

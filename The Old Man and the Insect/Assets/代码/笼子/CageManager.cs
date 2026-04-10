@@ -6,13 +6,79 @@ using UnityEngine.UI;
 
 public class InsectData//这个玩意作为正式使用的虫虫数据集
 {
-    public int insectId=0;
+    public int insectId=0;//abcdef对应123456
     public string insectName;
-    public float insectHP;
-    public float insectAtk;
+    public float insectHP=0;
+    public float insectAtk=0;
     public float pointsComsumption;
     public string description;
     public Image Image;
+    public int insectAtklevel=1;
+    public int insetHplevel = 1;
+
+    
+
+    public float setAtkUpData()
+    {   
+        if(insectAtklevel<3)
+        {
+            switch (insectId)
+            {
+                case 1:
+                    insectAtk += insectAtklevel * 1;
+                    break;
+                case 2:
+                    insectAtk += insectAtklevel  * 2;
+                    break;
+                case 3:
+                    insectAtk += insectAtklevel * 3;
+                    break;
+                case 4:
+                    insectAtk += insectAtklevel * 1;
+                    break;
+                case 5:
+                    insectAtk += insectAtklevel * 2;
+                    break;
+                case 6:
+                    insectAtk += insectAtklevel  * 4;
+                    break;
+            }
+        }
+        insectAtklevel++;
+        return insectAtk;
+    }
+
+    public float setHpUpData()
+    {   
+        if(insetHplevel<3)
+        {
+            switch (insectId)
+            {
+                case 1:
+                    insectHP += insetHplevel  * 2;
+                    break;
+                case 2:
+                    insectHP += insetHplevel  * 2;
+                    break;
+                case 3:
+                    insectHP += insetHplevel  * 1;
+                    break;
+                case 4:
+                    insectHP +=insetHplevel  * 4;
+                    break;
+                case 5:
+                    insectHP += insetHplevel  * 3;
+                    break;
+                case 6:
+                    insectHP += insetHplevel  * 1;
+                    break;
+            }
+        }
+        insetHplevel++;
+        return insectHP;
+    }
+    //这一块计划全部根据id用switch来写
+    //直接在这里处理升级逻辑
 }
 
 public sealed class CageManager : MonoBehaviour
@@ -21,13 +87,25 @@ public sealed class CageManager : MonoBehaviour
 
     #region
 
-    private static readonly CageManager _instance = new CageManager();
+    private static CageManager _instance;
 
-    private CageManager()
+    public static CageManager Instance
     {
+        get
+        {
+            if (_instance == null)
+            {
+                _instance = FindObjectOfType<CageManager>();
+                if (_instance == null)
+                {
+                    var singletonObject = new GameObject("CageManagerSingleton");
+                    _instance = singletonObject.AddComponent<CageManager>();
+                    DontDestroyOnLoad(singletonObject);
+                }
+            }
+            return _instance;
+        }
     }
-
-    public static CageManager Instance => _instance;
 
     #endregion
 
@@ -58,11 +136,15 @@ public sealed class CageManager : MonoBehaviour
 
     private void Awake()
     {
-        if (_instance != this && _instance != null)
+        if (_instance != null && _instance != this)
         {
             Destroy(gameObject);
         }
-
+        else
+        {
+            _instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
     }
 
     // Start is called before the first frame update
@@ -103,6 +185,9 @@ public sealed class CageManager : MonoBehaviour
         data.insectName = insectData.insectName;
         data.description = insectData.description;
         data.pointsComsumption = insectData.pointsComsumption;
+        data.Image = insectData.Image;
+        data.insectAtklevel=insectData.insectAtklevel;
+        data.insetHplevel = insectData.insetHplevel;
         foreach (var kvp in insectInCage)
         {
             if (kvp.Value.insectId == 0) // 假设 insectId 为 0 表示空格子
@@ -159,9 +244,9 @@ public sealed class CageManager : MonoBehaviour
         insectInCage.Clear();
 
         // 重新填充昆虫数据
-        foreach (var insect in newInsects)
+        for (int i = 0; i < slotCount; i++)
         {
-            AddInsect(insect); // 使用已有的AddInsect方法来添加昆虫
+            insectInCage.Add(i, newInsects[i]);
         }
     }
 }

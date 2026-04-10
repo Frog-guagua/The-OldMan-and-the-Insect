@@ -6,6 +6,7 @@ public class CageSlot : MonoBehaviour
 {
     public int slotID;
     private CageUI cageUI;
+
     public InsectData Data;
     // Start is called before the first frame update
     void Start()
@@ -20,9 +21,9 @@ public class CageSlot : MonoBehaviour
     }
     public void onclick()
     {
-        CageManager.Instance.currentChosenData=Data;
+        CageManager.Instance.currentChosenData=CageManager.Instance.insectInCage[slotID];
         cageUI.slotOnClick();//在专门管理ui的代码里处理相关逻辑
-        Debug.Log(Data.insectId);
+       
     }
 
     public void refreshSlot()

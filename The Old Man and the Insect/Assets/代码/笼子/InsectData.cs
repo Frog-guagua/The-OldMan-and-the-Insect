@@ -1,78 +1,67 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
+
+
 public class InsectData:MonoBehaviour//这个玩意作为正式使用的虫虫数据集
+//呱：强 抑郁症模型小鼠老大 强
 {
     public int insectId=0;//abcdef对应123456
     public string insectName;
-    public float insectHP=0;
-    public float insectAtk=0;
-    public float pointsComsumption;
+    public int insectHP=0;
+    public int insectAtk=0;
+    public int insectLevel; //呱：虫子的等级 
+    
     public string description;
     public Image Image;
-    public int insectAtklevel=1;
-    public int insetHplevel = 1;
-
+    /// <summary>
+    /// 用于加小虫的战斗力 的经验值 （消耗）
+    /// </summary>
+     public int AtkUpConsumpution=1;
     
+    /// <summary>
+    /// 用于加小虫的生命值 的经验值 （消耗）
+    /// </summary>
+     public int HpUpConsumption = 1;
 
-    public float setAtkUpData()
-    {   
-        if(insectAtklevel<3)
+
+
+    public int UpdateExperience(int consumption)
+    {
+        return DataBroker.experience -= consumption;
+        
+    }
+    
+    /// <summary>
+    /// 给攻击力 加点 的逻辑
+    /// </summary>
+    /// <returns></returns>
+    public float LetAtkUp()
+    {
+        //呱： 只有消耗的经验值 是 虫虫等级的倍数 的时候 才可以成功的给攻击力加点
+        if (AtkUpConsumpution % insectLevel == 0)
         {
-            switch (insectId)
-            {
-                case 1:
-                    insectAtk += insectAtklevel * 1;
-                    break;
-                case 2:
-                    insectAtk += insectAtklevel  * 2;
-                    break;
-                case 3:
-                    insectAtk += insectAtklevel * 3;
-                    break;
-                case 4:
-                    insectAtk += insectAtklevel * 1;
-                    break;
-                case 5:
-                    insectAtk += insectAtklevel * 2;
-                    break;
-                case 6:
-                    insectAtk += insectAtklevel  * 4;
-                    break;
-            }
+            insectAtk += AtkUpConsumpution/insectLevel;
         }
-        insectAtklevel++;
+        
         return insectAtk;
     }
 
-    public float setHpUpData()
+    
+    /// <summary>
+    /// 设置生命升级的逻辑
+    /// </summary>
+    /// <returns></returns>
+    public float LetHPUp()
     {   
-        if(insetHplevel<3)
+        //呱： 只有消耗的经验值 是 虫虫等级的倍数 的时候 才可以成功的给生命值加点
+        if (AtkUpConsumpution % insectHP == 0)
         {
-            switch (insectId)
-            {
-                case 1:
-                    insectHP += insetHplevel  * 2;
-                    break;
-                case 2:
-                    insectHP += insetHplevel  * 2;
-                    break;
-                case 3:
-                    insectHP += insetHplevel  * 1;
-                    break;
-                case 4:
-                    insectHP +=insetHplevel  * 4;
-                    break;
-                case 5:
-                    insectHP += insetHplevel  * 3;
-                    break;
-                case 6:
-                    insectHP += insetHplevel  * 1;
-                    break;
-            }
+            insectHP += AtkUpConsumpution/insectLevel;
         }
-        insetHplevel++;
+        
         return insectHP;
     }
     //这一块计划全部根据id用switch来写

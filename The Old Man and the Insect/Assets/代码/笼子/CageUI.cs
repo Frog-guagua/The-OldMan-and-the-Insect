@@ -89,7 +89,7 @@ public class CageUI : MonoBehaviour
     public void slotOnClick() // 处理点击逻辑
     {
         levelUpUI.SetActive(true);
-        if (CageManager.Instance.currentChosenData.insectAtklevel > 2)
+        if (CageManager.Instance.currentChosenData.AtkUpConsumpution > 2)
         {
             atkUpbtn.gameObject.SetActive(false);
         }
@@ -98,7 +98,7 @@ public class CageUI : MonoBehaviour
             atkUpbtn.gameObject.SetActive(true);
         }
 
-        if (CageManager.Instance.currentChosenData.insetHplevel > 2)
+        if (CageManager.Instance.currentChosenData.HpUpConsumption > 2)
         {
             hpUpbtn.gameObject.SetActive(false);
         }
@@ -123,13 +123,13 @@ public class CageUI : MonoBehaviour
     public void hpLevelUp()//升级点击事件
     {
        
-        this.hp.text=CageManager.Instance.currentChosenData.setHpUpData().ToString();
-        Debug.Log( CageManager.Instance.currentChosenData.insetHplevel);
+        this.hp.text=CageManager.Instance.currentChosenData.LetHPUp().ToString();
+        Debug.Log( CageManager.Instance.currentChosenData.HpUpConsumption);
     }
     public void atkLevelUp()
     {
        
-        this.atk.text=CageManager.Instance.currentChosenData.setAtkUpData().ToString();
-        Debug.Log( CageManager.Instance.currentChosenData.insectAtklevel);
+        this.atk.text=CageManager.Instance.currentChosenData.LetAtkUp().ToString();
+        Debug.Log( CageManager.Instance.currentChosenData.AtkUpConsumpution);
     }
 }

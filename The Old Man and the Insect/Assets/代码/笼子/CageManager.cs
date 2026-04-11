@@ -109,10 +109,10 @@ public sealed class CageManager : MonoBehaviour
         data.insectHP = insectData.insectHP;
         data.insectName = insectData.insectName;
         data.description = insectData.description;
-        data.pointsComsumption = insectData.pointsComsumption;
+        data.pointsConsumption = insectData.pointsComsumption;
         data.Image = insectData.Image;
-        data.insectAtklevel=insectData.insectAtklevel;
-        data.insetHplevel = insectData.insetHplevel;
+        data.AtkUpConsumpution=insectData.insectAtklevel;
+        data.HpUpConsumption = insectData.insetHplevel;
         foreach (var kvp in insectInCage)
         {
             if (kvp.Value.insectId == 0) // 假设 insectId 为 0 表示空格子

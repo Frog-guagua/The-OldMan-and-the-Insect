@@ -15,7 +15,7 @@ public sealed class DataBroker
    
     public static DataBroker Instance => _instance;
     public List<InsectData> datasFromCage = new List<InsectData>();//这个是鼠给呱呱的
-    public float experience = 0;//malooooooooo！
+    public  static int experience = 0;//malooooooooo！
     public List<InsectData> datasFromFight = new List<InsectData>();//这个是呱呱给鼠的
     //目前设想为每次传递清空list里的原有数据，只作为中间商传递
     public void give_datasFromCage(List<InsectData> datas)

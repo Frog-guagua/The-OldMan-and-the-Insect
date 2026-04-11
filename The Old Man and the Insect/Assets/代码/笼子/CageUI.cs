@@ -15,7 +15,7 @@ public class CageUI : MonoBehaviour
     public GameObject levelUpUI;
 
     public Text atk;
-
+    public Text experience;
     public Text hp;
 
     public Button hpUpbtn;
@@ -89,26 +89,11 @@ public class CageUI : MonoBehaviour
     public void slotOnClick() // 处理点击逻辑
     {
         levelUpUI.SetActive(true);
-        if (CageManager.Instance.currentChosenData.AtkUpConsumpution > 2)
-        {
-            atkUpbtn.gameObject.SetActive(false);
-        }
-        else
-        {
-            atkUpbtn.gameObject.SetActive(true);
-        }
-
-        if (CageManager.Instance.currentChosenData.HpUpConsumption > 2)
-        {
-            hpUpbtn.gameObject.SetActive(false);
-        }
-        else
-        {
-            hpUpbtn.gameObject.SetActive(true);
-        }
+        CheckExpAndLevel();
         atk.text = CageManager.Instance.currentChosenData.insectAtk.ToString();
         hp.text = CageManager.Instance.currentChosenData.insectHP.ToString();
         Debug.Log(CageManager.Instance.currentChosenData.insectAtk.ToString());
+        experience.text ="exp:"+DataBroker.experience.ToString();
     }
 
     public void setAct() { 
@@ -125,11 +110,37 @@ public class CageUI : MonoBehaviour
        
         this.hp.text=CageManager.Instance.currentChosenData.LetHPUp().ToString();
         Debug.Log( CageManager.Instance.currentChosenData.HpUpConsumption);
+        CheckExpAndLevel();
+        experience.text ="exp:"+DataBroker.experience.ToString();
+        
     }
     public void atkLevelUp()
     {
        
         this.atk.text=CageManager.Instance.currentChosenData.LetAtkUp().ToString();
         Debug.Log( CageManager.Instance.currentChosenData.AtkUpConsumpution);
+        CheckExpAndLevel();
+        experience.text ="exp:"+DataBroker.experience.ToString();
     }
+
+    public void CheckExpAndLevel()
+    {
+        if (CageManager.Instance.currentChosenData.insectLevel>DataBroker.experience)
+        {
+            atkUpbtn.gameObject.SetActive(false);
+        }
+        else
+        {
+            atkUpbtn.gameObject.SetActive(true);
+        }
+
+        if (CageManager.Instance.currentChosenData.insectLevel>DataBroker.experience)
+        {
+            hpUpbtn.gameObject.SetActive(false);
+        }
+        else
+        {
+            hpUpbtn.gameObject.SetActive(true);
+        }
+    }//经验不够就不给升级按钮
 }

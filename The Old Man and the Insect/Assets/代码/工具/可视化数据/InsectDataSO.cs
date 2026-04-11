@@ -7,13 +7,12 @@ using UnityEngine.UI;
 public class InsectDataSO : ScriptableObject
 {
     // 在这里声明你的公共变量
-    public int insectId=0;//abcdef对应123456
+    public int insectId = 0; //abcdef对应123456
     public string insectName;
-    public float insectHP=0;
-    public float insectAtk=0;
-    public float pointsComsumption;
+    public int insectHP = 0;
+    public int insectAtk = 0;
+    public int insectLevel=1; //呱：虫子的等级 
+
     public string description;
     public Image Image;
-    public int insectAtklevel=1;
-    public int insetHplevel = 1;
 }

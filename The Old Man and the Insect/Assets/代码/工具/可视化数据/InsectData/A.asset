@@ -16,5 +16,6 @@ MonoBehaviour:
   insectName: A1
   insectHP: 1
   insectAtk: 2
-  pointsComsumption: 1
+  insectLevel: 1
   description: 
+  Image: {fileID: 0}

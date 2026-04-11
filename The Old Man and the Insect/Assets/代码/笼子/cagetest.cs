@@ -20,5 +20,6 @@ public class cagetest : MonoBehaviour
     {
         CageManager.Instance.AddInsect(insectData);
         print("test");
+        DataBroker.experience++;
     }
 }

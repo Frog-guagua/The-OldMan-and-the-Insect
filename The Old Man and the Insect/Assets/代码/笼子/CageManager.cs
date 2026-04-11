@@ -109,10 +109,9 @@ public sealed class CageManager : MonoBehaviour
         data.insectHP = insectData.insectHP;
         data.insectName = insectData.insectName;
         data.description = insectData.description;
-        data.pointsConsumption = insectData.pointsComsumption;
+       
         data.Image = insectData.Image;
-        data.AtkUpConsumpution=insectData.insectAtklevel;
-        data.HpUpConsumption = insectData.insetHplevel;
+       data.insectLevel = insectData.insectLevel;
         foreach (var kvp in insectInCage)
         {
             if (kvp.Value.insectId == 0) // 假设 insectId 为 0 表示空格子
@@ -167,7 +166,10 @@ public sealed class CageManager : MonoBehaviour
     {
         // 首先清空现有的昆虫
         insectInCage.Clear();
-
+        for (int i = 0; i < slotCount; i++)
+        {
+            insectInCage.Add(i, new InsectData());
+        }
         // 重新填充昆虫数据
         for (int i = 0; i < slotCount; i++)
         {

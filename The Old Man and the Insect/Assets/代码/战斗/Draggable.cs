@@ -12,7 +12,7 @@ public class Draggable : MonoBehaviour
     //     用静态 是想所有虫虫都挂载 这个脚本的话 静态类能保证唯一性 
     public static E_BugType nowBugType; //呱： 储存目前被拖拽的虫虫的类型
     public static int nowGridIndex;//呱： 记录 虫子在哪个格子上被松开了 方便传值进行判定
-    private GameObject nowBug;
+    public static GameObject nowBug;
 
     #endregion
     
@@ -28,7 +28,7 @@ public class Draggable : MonoBehaviour
     //呱：在这里获取游戏物体 是为了获取上面挂载的脚本
     [SerializeField]  GameObject cage; //呱：获取 CageZoom 脚本 
     [SerializeField]  GameObject gridManager;//呱： 获取 GridManager 脚本
-    private FightManager fightManager;
+    private RoundManager fightManager;
     private FollowCage followCage;
     #endregion
 
@@ -47,7 +47,7 @@ public class Draggable : MonoBehaviour
         
         GetComponent<Collider2D>().enabled = true;
         followCage = GetComponent<FollowCage>();
-        fightManager = GetComponent<FightManager>();
+        fightManager = GetComponent<RoundManager>();
     }
     
     void Update()
@@ -90,7 +90,8 @@ public class Draggable : MonoBehaviour
             //呱：这个是为了记录 放置虫子的类型 
             nowBugType = GetComponent<BugInfomations>().bugType;
            
-            fightManager.TeachingRound(nowBug);
+        
+           
             StopDrag();
         }
 

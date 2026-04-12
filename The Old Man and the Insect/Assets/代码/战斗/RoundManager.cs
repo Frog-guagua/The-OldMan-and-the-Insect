@@ -5,30 +5,29 @@ using UnityEngine;
 //呱： woc我真快写疯了 我决定给待机虫虫 挂载这个美味脚本
 //    代码求你自己跑起来
 //    做法 # 做法
-public class FightManager : MonoBehaviour
+public class RoundManager : MonoBehaviour
 {
-    public static bool OnGame1;
-    public static bool OnGame2;
-    public static bool OnGame3;
+ 
 
 
     private BugMatch bugMatch;
     private int nowRound =1;
     void Start()
     {
-        OnGame1 = true;
+        FightFlowManager.OnGame1 = true;
     }
 
     
     void Update()
     {
+        //呱：在小鼠老大没有写好这个逻辑前 先用这个强制启动 方便我做实验
         bugMatch = GetComponent<BugMatch>();
     }
 
     //呱： 给第一关教学关卡 写的函数
     public void TeachingRound(GameObject nowBug)
     {
-       if(!OnGame1) return;
+       if(!FightFlowManager.OnGame1) return;
         
             if (nowRound == 1)
             {

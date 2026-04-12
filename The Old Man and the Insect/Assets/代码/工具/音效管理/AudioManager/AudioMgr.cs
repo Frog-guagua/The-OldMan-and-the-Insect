@@ -50,6 +50,7 @@ public class AudioMgr : MonoBehaviour
         {
             bgmSource.clip = clip;
             bgmSource.Play();
+            bgmSource.loop = true;
         }
     }
     

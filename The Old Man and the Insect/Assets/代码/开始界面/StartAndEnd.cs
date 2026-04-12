@@ -10,13 +10,8 @@ public class StartAndEnd : MonoBehaviour
     public void SwitchToScene()
     {
         
-        SceneManager.LoadScene(targetSceneName, LoadSceneMode.Additive);
-
-       
-        
-
-        // 卸载当前场景
-        SceneManager.UnloadSceneAsync("StartMenu");
+       Transition.Instance.SwitchSceneWithFade(targetSceneName);
+      
     }
 
     public void QuitGame()
